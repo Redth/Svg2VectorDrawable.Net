@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Svg2VectorDrawable.Console", "Svg2VectorDrawable.Console\Svg2VectorDrawable.Console.csproj", "{3D21E0FF-44D4-4D3C-8B86-0929765C50B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Svg2VectorDrawable.Net", "Svg2VectorDrawable.Net\Svg2VectorDrawable.Net.csproj", "{3E46A017-0FDA-48C6-B981-EC9CAF2E994C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D21E0FF-44D4-4D3C-8B86-0929765C50B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D21E0FF-44D4-4D3C-8B86-0929765C50B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D21E0FF-44D4-4D3C-8B86-0929765C50B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D21E0FF-44D4-4D3C-8B86-0929765C50B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E46A017-0FDA-48C6-B981-EC9CAF2E994C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E46A017-0FDA-48C6-B981-EC9CAF2E994C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E46A017-0FDA-48C6-B981-EC9CAF2E994C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E46A017-0FDA-48C6-B981-EC9CAF2E994C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2F3EA7D-1B95-487B-B33A-090D18FE7D5C}
+	EndGlobalSection
+EndGlobal

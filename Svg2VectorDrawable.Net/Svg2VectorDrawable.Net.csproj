@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>Svg2VectorDrawable.Net</PackageId>
+		<Title>Svg2VectorDrawable.Net</Title>
+		<Description>A C# port of Android Studio's Svg2Vector for converting .SVG files to Android Vector Drawable XML format.</Description>
+		<Summary>A C# port of Android Studio's Svg2Vector</Summary>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/Redth/Svg2VectorDrawable.Net</PackageProjectUrl>
+		<RepositoryUrl></RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/Redth/Svg2VectorDrawable.Net.git</RepositoryUrl>
+		<PackageTags>Svg, Vector, Svg2Vector, Android, VectorDrawable</PackageTags>
+		<Authors>Redth</Authors>
+		<Owners>Redth</Owners>
+		
+		<!-- sourcelink: Declare that the Repository URL can be published to NuSpec -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<!-- sourcelink: Embed source files that are not tracked by the source control manager to the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<!-- sourcelink: Include PDB in the built .nupkg -->
+		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	</PropertyGroup>
+</Project>
