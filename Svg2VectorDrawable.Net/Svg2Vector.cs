@@ -34,7 +34,7 @@ namespace Svg2VectorDrawable
 		internal const string SVG_CLIP = "clip";
 		internal const string SVG_POINTS = "points";
 
-		static readonly Dictionary<string, string> presentationMap = new Dictionary<string, string>
+		static internal readonly Dictionary<string, string> presentationMap = new Dictionary<string, string>
 			{
 				{ SVG_STROKE_COLOR, "android:strokeColor" },
 				{ SVG_STROKE_OPACITY, "android:strokeAlpha" },
