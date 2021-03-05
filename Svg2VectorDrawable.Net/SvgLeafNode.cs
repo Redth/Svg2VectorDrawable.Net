@@ -47,6 +47,10 @@ namespace Svg2VectorDrawable
 											   SvgTree.SvgLogLevel.Error);
 					}
 				}
+				else if (Svg2Vector.htmlColorMap.TryGetValue(vdValue.ToLowerInvariant(), out var htmlHex))
+				{
+					vdValue = htmlHex;
+				}
 				String attr = "\n        " + vectorDrawableAttr + "=\"" +
 							  vdValue + "\"";
 				sb.Insert(0, attr);
