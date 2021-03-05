@@ -1,42 +1,52 @@
 name: Build
 
-on:
-  pull_request:
+on: 
   push:
   release:
     types: [published]
+  pull_request:
+    branches:
+    - master
     
 jobs:
     build:
       name: Build
       env:
-        NUPKG_MAJOR: 0.1
-      runs-on: windows-latest
+        NUPKG_MAJOR: 0.2
+      runs-on: macos-latest
       steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.0
-      - name: NuGet Restore
-        run: msbuild /t:Restore /p:Configuration=Release .\Svg2VectorDrawable.Net.sln
-      - name: Build
-        run: msbuild /t:Build /p:Configuration=Release .\Svg2VectorDrawable.Net.sln
-      - name: Package NuGets
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.100
+      - name: Build and Pack - Release
+        if: github.event_name == 'release'
         run: |
-          $pkgVer = ($env:NUPKG_MAJOR + "-alpha" + $env:GITHUB_RUN_ID)
-          if ($env:GITHUB_EVENT_NAME -eq "release") {
-            $pkgVer = $env:GITHUB_REF.Substring($env:GITHUB_REF.LastIndexOf('/') + 1)
-          }
-          New-Item -ItemType Directory -Force -Path .\artifacts
-          msbuild /t:Pack /p:Configuration=Release /p:PackageOutputPath=..\artifacts /p:PackageVersion=$pkgVer /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg .\Svg2VectorDrawable.Net\Svg2VectorDrawable.Net.csproj
+          arrTag=(${GITHUB_REF//\// })
+          VERSION="${arrTag[2]}"
+          VERSION="${VERSION//v}"
+          mkdir ./output
+          mkdir ./artifacts
+          dotnet build --configuration Release ./Svg2VectorDrawable.Net.sln
+          dotnet pack --output ./artifacts -p:PackageVersion=$VERSION --configuration Release ./Svg2VectorDrawable.Net/Svg2VectorDrawable.Net.csproj
+      - name: Build and Pack - CI
+        if: github.event_name != 'release'
+        run: |
+          VERSION=$NUPKG_MAJOR-ci$GITHUB_RUN_ID
+          mkdir ./output
+          mkdir ./artifacts
+          dotnet build --configuration Release ./Svg2VectorDrawable.Net.sln
+          dotnet pack --output ./artifacts -p:PackageVersion=$VERSION --configuration Release ./Svg2VectorDrawable.Net/Svg2VectorDrawable.Net.csproj
       - name: Upload Artifacts
         uses: actions/upload-artifact@v1
         with:
           name: NuGet
-          path: .\artifacts
+          path: ./artifacts
 
-    publish-nugetorg:
-      name: Publish to NuGet.org
+    publish:
+      name: Publish
       needs: build
       runs-on: windows-latest
       if: github.event_name == 'release'
@@ -45,6 +55,10 @@ jobs:
           uses: actions/download-artifact@v1
           with:
             name: NuGet
+        - name: Setup .NET Core
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 3.1.100
         - name: Setup NuGet
           uses: nuget/setup-nuget@v1
           with:
@@ -52,4 +66,7 @@ jobs:
             nuget-version: 'latest'
         - name: Push NuGet
           run: |
-            nuget push NuGet\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_ORG_API_KEY }}
+            nuget sources add -Name "GPR" -Source "https://nuget.pkg.github.com/Redth/index.json" -UserName Redth -Password ${{ secrets.GITHUB_TOKEN }}
+            nuget setApiKey ${{ secrets.NUGET_API_KEY }} -Source "GPR"
+            nuget push NuGet\*.nupkg --source "GPR" --skip-duplicate
+            nuget push NuGet\*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_ORG_API_KEY }} --skip-duplicate
