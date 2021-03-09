@@ -12,7 +12,7 @@ jobs:
     build:
       name: Build
       env:
-        NUPKG_MAJOR: 0.2
+        NUPKG_MAJOR: 0.4
       runs-on: macos-latest
       steps:
       - name: Checkout
