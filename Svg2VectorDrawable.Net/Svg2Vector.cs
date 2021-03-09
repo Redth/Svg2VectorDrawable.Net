@@ -753,10 +753,10 @@ namespace Svg2VectorDrawable
 		static void WriteXml(SvgTree svgTree, StreamWriter fw)
 			=> svgTree.Root.WriteXml(fw);
 
-		public static string Convert(string inputSvgFilename, string outputXmlFilename)
+		public static void Convert(string inputSvgFilename, string outputXmlFilename)
 		{
 			using (var s = File.Create(outputXmlFilename))
-				return ParseSvgToXml(inputSvgFilename, s);
+				ParseSvgToXml(inputSvgFilename, s);
 		}
 
 		/**
@@ -768,30 +768,22 @@ namespace Svg2VectorDrawable
 		 * @return the error messages, which contain things like all the tags
 		 *         VectorDrawble don't support or exception message.
 		 */
-		public static String ParseSvgToXml(string inputSvgFilename, Stream outputStream)
+		public static void ParseSvgToXml(string inputSvgFilename, Stream outputStream)
 		{
-			// Write all the error message during parsing into SvgTree. and return here as getErrorLog().
-			// We will also log the exceptions here.
-			String errorLog = null;
-			try
+			SvgTree svgTree = Parse(inputSvgFilename);
+			var errorLog = svgTree.GetErrorLog();
+			if (!string.IsNullOrWhiteSpace(errorLog))
+				throw new Exception(errorLog);
+			
+			// When there was anything in the input SVG file that we can't
+			// convert to VectorDrawable, we logged them as errors.
+			// After we logged all the errors, we skipped the XML file generation.
+			if (svgTree.CanConvertToVectorDrawable())
 			{
-				SvgTree svgTree = Parse(inputSvgFilename);
-				errorLog = svgTree.GetErrorLog();
-				// When there was anything in the input SVG file that we can't
-				// convert to VectorDrawable, we logged them as errors.
-				// After we logged all the errors, we skipped the XML file generation.
-				if (svgTree.CanConvertToVectorDrawable())
-				{
-					WriteFile(outputStream, svgTree);
-				}
+				WriteFile(outputStream, svgTree);
 			}
-			catch (Exception e)
-			{
-				errorLog = "EXCEPTION in parsing " + inputSvgFilename + ":\n" + e.Message;
-			}
-			return errorLog;
 		}
-		
+
 		static internal readonly Dictionary<string, string> htmlColorMap = new Dictionary<string, string>
 			{
 				{ "transparent", "#00000000" },

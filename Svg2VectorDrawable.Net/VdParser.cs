@@ -266,7 +266,7 @@ namespace Svg2VectorDrawable
 			}
 			catch (Exception e)
 			{
-				throw new Exception("error in parsing \"" + s + "\"", e);
+				throw new Exception($"Error when parsing \"{s}\".", e);
 			}
 		}
 		// End of copy from PathParser.java
