@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -248,7 +249,7 @@ namespace Svg2VectorDrawable
 					{
 						var fstr = s.JavaSubstring(startPosition, endPosition);
 
-						results[count++] = float.Parse(fstr.TrimEnd(','));
+						results[count++] = float.Parse(fstr.TrimEnd(','), CultureInfo.InvariantCulture);
 					}
 
 					if (result.EndWithNegOrDot)
@@ -265,7 +266,7 @@ namespace Svg2VectorDrawable
 			}
 			catch (Exception e)
 			{
-				throw new Exception("error in parsing \"" + s + "\"", e);
+				throw new Exception($"Error when parsing \"{s}\".", e);
 			}
 		}
 		// End of copy from PathParser.java
@@ -299,7 +300,7 @@ namespace Svg2VectorDrawable
 				float size = 0;
 				if (matcher.Success)
 				{
-					float v = float.Parse(matcher.Groups[1].Value);
+					float v = float.Parse(matcher.Groups[1].Value, CultureInfo.InvariantCulture);
 					var unit = matcher.Groups[3].Value.ToLowerInvariant();
 					size = v;
 				}
@@ -315,15 +316,15 @@ namespace Svg2VectorDrawable
 				}
 				else if ("android:viewportWidth".Equals(name, StringComparison.OrdinalIgnoreCase))
 				{
-					vdTree.PortWidth = float.Parse(value);
+					vdTree.PortWidth = float.Parse(value, CultureInfo.InvariantCulture);
 				}
 				else if ("android:viewportHeight".Equals(name, StringComparison.OrdinalIgnoreCase))
 				{
-					vdTree.PortHeight = float.Parse(value);
+					vdTree.PortHeight = float.Parse(value, CultureInfo.InvariantCulture);
 				}
 				else if ("android:alpha".Equals(name, StringComparison.OrdinalIgnoreCase))
 				{
-					vdTree.RootAlpha = float.Parse(value);
+					vdTree.RootAlpha = float.Parse(value, CultureInfo.InvariantCulture);
 				}
 				else
 				{
@@ -392,39 +393,39 @@ namespace Svg2VectorDrawable
 			}
 			else if (PATH_FILL_OPACTIY.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.FillOpacity = float.Parse(value);
+				vgPath.FillOpacity = float.Parse(value, CultureInfo.InvariantCulture);
 				vgPath.FillColor &= 0x00FFFFFF;
 				vgPath.FillColor |= ((uint)(0xFF * vgPath.FillOpacity)) << 24;
 			}
 			else if (PATH_STROKE_OPACTIY.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.StrokeOpacity = float.Parse(value);
+				vgPath.StrokeOpacity = float.Parse(value, CultureInfo.InvariantCulture);
 				vgPath.StrokeColor &= 0x00FFFFFF;
 				vgPath.StrokeColor |= ((uint)(0xFF * vgPath.StrokeOpacity)) << 24;
 			}
 			else if (PATH_STROKE_WIDTH.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.StrokeWidth = float.Parse(value);
+				vgPath.StrokeWidth = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_ROTATION.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.Rotate = float.Parse(value);
+				vgPath.Rotate = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_SHIFT_X.Equals(name))
 			{
-				vgPath.ShiftX = float.Parse(value);
+				vgPath.ShiftX = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_SHIFT_Y.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.ShiftY = float.Parse(value);
+				vgPath.ShiftY = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_ROTATION_Y.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.RotateY = float.Parse(value);
+				vgPath.RotateY = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_ROTATION_X.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.RotateX = float.Parse(value);
+				vgPath.RotateX = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_CLIP.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
@@ -432,15 +433,15 @@ namespace Svg2VectorDrawable
 			}
 			else if (PATH_TRIM_START.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.TrimPathStart = float.Parse(value);
+				vgPath.TrimPathStart = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_TRIM_END.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.TrimPathEnd = float.Parse(value);
+				vgPath.TrimPathEnd = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_TRIM_OFFSET.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.TrimPathOffset = float.Parse(value);
+				vgPath.TrimPathOffset = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else if (PATH_STROKE_LINECAP.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
@@ -474,7 +475,7 @@ namespace Svg2VectorDrawable
 			}
 			else if (PATH_STROKE_MITERLIMIT.Equals(name, StringComparison.OrdinalIgnoreCase))
 			{
-				vgPath.StrokeMiterlimit = float.Parse(value);
+				vgPath.StrokeMiterlimit = float.Parse(value, CultureInfo.InvariantCulture);
 			}
 			else
 			{
