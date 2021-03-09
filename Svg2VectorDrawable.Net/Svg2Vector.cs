@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -201,19 +202,19 @@ namespace Svg2VectorDrawable
 						var sp = value.Split(' ');
 						for (int j = 0; j < sp.Length; j++)
 						{
-							avg.Matrix[j] = float.Parse(sp[j]);
+							avg.Matrix[j] = float.Parse(sp[j], CultureInfo.InvariantCulture);
 						}
 					}
 				}
 				else if (name.Equals("y", StringComparison.OrdinalIgnoreCase))
 				{
 					// TODO: Do something with this value?
-					float.Parse(value);
+					float.Parse(value, CultureInfo.InvariantCulture);
 				}
 				else if (name.Equals("x", StringComparison.OrdinalIgnoreCase))
 				{
 					// TODO: Do something with this value?
-					float.Parse(value);
+					float.Parse(value, CultureInfo.InvariantCulture);
 				}
 
 			}
@@ -244,16 +245,16 @@ namespace Svg2VectorDrawable
 				if (SVG_WIDTH.Equals(name, StringComparison.OrdinalIgnoreCase))
 				{
 					if (value.EndsWith("%", StringComparison.OrdinalIgnoreCase))
-						percentWidth = float.Parse(value.JavaSubstring(0, subStringSize - 1));
+						percentWidth = float.Parse(value.JavaSubstring(0, subStringSize - 1), CultureInfo.InvariantCulture);
 					else
-						avg.Width = float.Parse(value.JavaSubstring(0, subStringSize));
+						avg.Width = float.Parse(value.JavaSubstring(0, subStringSize), CultureInfo.InvariantCulture);
 				}
 				else if (SVG_HEIGHT.Equals(name, StringComparison.OrdinalIgnoreCase))
 				{
 					if (value.EndsWith("%", StringComparison.OrdinalIgnoreCase))
-						percentHeight = float.Parse(value.JavaSubstring(0, subStringSize - 1));
+						percentHeight = float.Parse(value.JavaSubstring(0, subStringSize - 1), CultureInfo.InvariantCulture);
 					else
-						avg.Height = float.Parse(value.JavaSubstring(0, subStringSize));
+						avg.Height = float.Parse(value.JavaSubstring(0, subStringSize), CultureInfo.InvariantCulture);
 				}
 				else if (SVG_VIEW_BOX.Equals(name, StringComparison.OrdinalIgnoreCase))
 				{
@@ -261,7 +262,7 @@ namespace Svg2VectorDrawable
 					String[] strbox = value.Split(' ');
 					for (int j = 0; j < avg.ViewBox.Length; j++)
 					{
-						avg.ViewBox[j] = float.Parse(strbox[j]);
+						avg.ViewBox[j] = float.Parse(strbox[j], CultureInfo.InvariantCulture);
 					}
 				}
 			}
@@ -434,13 +435,13 @@ namespace Svg2VectorDrawable
 					{
 						PathBuilder builder = new PathBuilder();
 						var split = Regex.Split(value, "[\\s,]+");
-						float baseX = float.Parse(split[0]);
-						float baseY = float.Parse(split[1]);
+						float baseX = float.Parse(split[0], CultureInfo.InvariantCulture);
+						float baseY = float.Parse(split[1], CultureInfo.InvariantCulture);
 						builder.AbsoluteMoveTo(baseX, baseY);
 						for (int j = 2; j < split.Length; j += 2)
 						{
-							float x = float.Parse(split[j]);
-							float y = float.Parse(split[j + 1]);
+							float x = float.Parse(split[j], CultureInfo.InvariantCulture);
+							float y = float.Parse(split[j + 1], CultureInfo.InvariantCulture);
 							builder.RelativeLineTo(x - baseX, y - baseY);
 							baseX = x;
 							baseY = y;
@@ -492,19 +493,19 @@ namespace Svg2VectorDrawable
 					}
 					else if (name.Equals("x"))
 					{
-						x = float.Parse(value);
+						x = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("y", StringComparison.OrdinalIgnoreCase))
 					{
-						y = float.Parse(value);
+						y = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("width", StringComparison.OrdinalIgnoreCase))
 					{
-						width = float.Parse(value);
+						width = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("height", StringComparison.OrdinalIgnoreCase))
 					{
-						height = float.Parse(value);
+						height = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("style", StringComparison.OrdinalIgnoreCase))
 					{
@@ -568,15 +569,15 @@ namespace Svg2VectorDrawable
 					}
 					else if (name.Equals("cx", StringComparison.OrdinalIgnoreCase))
 					{
-						cx = float.Parse(value);
+						cx = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("cy", StringComparison.OrdinalIgnoreCase))
 					{
-						cy = float.Parse(value);
+						cy = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("r", StringComparison.OrdinalIgnoreCase))
 					{
-						radius = float.Parse(value);
+						radius = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 
 				}
@@ -634,19 +635,19 @@ namespace Svg2VectorDrawable
 					}
 					else if (name.Equals("x1", StringComparison.OrdinalIgnoreCase))
 					{
-						x1 = float.Parse(value);
+						x1 = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("y1", StringComparison.OrdinalIgnoreCase))
 					{
-						y1 = float.Parse(value);
+						y1 = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("x2", StringComparison.OrdinalIgnoreCase))
 					{
-						x2 = float.Parse(value);
+						x2 = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 					else if (name.Equals("y2", StringComparison.OrdinalIgnoreCase))
 					{
-						y2 = float.Parse(value);
+						y2 = float.Parse(value, CultureInfo.InvariantCulture);
 					}
 				}
 

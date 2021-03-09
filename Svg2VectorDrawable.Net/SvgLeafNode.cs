@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -89,12 +90,12 @@ namespace Svg2VectorDrawable
 				number = number.Trim();
 				if (number.EndsWith("%", StringComparison.OrdinalIgnoreCase))
 				{
-					float value = float.Parse(number.JavaSubstring(0, number.Length - 1));
+					float value = float.Parse(number.JavaSubstring(0, number.Length - 1), CultureInfo.InvariantCulture);
 					color[i] = (byte)Clamp((int)(value * 255.0f / 100.0f), 0, 255);
 				}
 				else
 				{
-					int value = int.Parse(number);
+					int value = int.Parse(number, CultureInfo.InvariantCulture);
 					color[i] = (byte)Clamp(value, 0, 255);
 				}
 			}
